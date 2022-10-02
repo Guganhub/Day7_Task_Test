@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array_Methods</title>
+</head>
+<body>
+    <script>
+        
+        
+        // Create a XMLHttpRequest object
+
+        var obj = new XMLHttpRequest();
+
+        // open a connnection
+
+        obj.open('GET','https://restcountries.com/v3.1/all',true)
+
+        //send the connection
+
+        obj.send();
+
+        obj.onload=function(){
+            var data=JSON.parse(obj.response)
+            console.log(data)
+            
+            // 1.(a) Display all the countries from the Asian region in restcountriesapi
+            var countries=data.filter((element)=>element.region=='Asia')
+            console.log(countries)
+
+            //1.(b) Get all the countries with a population of less than 2 lakhs using Filter function
+            var population=data.filter((element)=>element.population<200000)
+            console.log(population)
+
+            //1.(c) Print the following details name, capital, flag using forEach function
+            data.forEach(element => {
+               console.log(element.name)
+               console.log(element.capital)
+               console.log(element.flags)
+
+            });
+
+            //1.(d) Print the total population of countries using reduce function
+            var total_population=data.reduce((acc,element)=>acc+element.population,0)
+            console.log(`The total population of the rest countries are: ${total_population}`)
+
+
+            //1.(e) Print the country which uses US Dollars as currency.
+            for(obj in data){
+                    var currency = data[obj].currencies
+                    
+                    for (var currencyKey in currency) {
+                    if (currencyKey == 'USD') {
+                        console.log(data[obj].name.common)
+                    }
+                }
+            }
+            
+            
+
+        
+        }
+        
+            
+            
+            
+        
+
+    </script>
+</body>
+</html> 
